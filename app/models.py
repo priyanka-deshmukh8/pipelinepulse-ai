@@ -6,6 +6,13 @@ from app.db import Base
 def utcnow():
     return datetime.now(timezone.utc)
 
+class User(Base):
+    __tablename__ = "users"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    email: Mapped[str] = mapped_column(String(320), unique=True, index=True)
+    password_hash: Mapped[str] = mapped_column(String(500))
+    is_active: Mapped[bool] = mapped_column(default=True)
+
 class Incident(Base):
     __tablename__ = "incidents"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)

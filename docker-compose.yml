@@ -7,11 +7,12 @@ services:
       - .env
     environment:
       DATABASE_URL: postgresql+psycopg://pipelinepulse:pipelinepulse@db:5432/pipelinepulse
+      VECTOR_CONNECTION: postgresql+psycopg://pipelinepulse:pipelinepulse@db:5432/pipelinepulse
     depends_on:
       db:
         condition: service_healthy
   db:
-    image: postgres:16-alpine
+    image: pgvector/pgvector:pg16
     environment:
       POSTGRES_DB: pipelinepulse
       POSTGRES_USER: pipelinepulse
