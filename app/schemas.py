@@ -1,12 +1,22 @@
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
+
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=12, max_length=128)
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
 
 class IncidentCreate(BaseModel):
     pipeline_name: str = Field(min_length=1, max_length=200)
     error_message: str = Field(min_length=1, max_length=10000)
 
-class IncidentAnalyzeRequest(BaseModel):
-    include_historical_context: bool = True
+class RunbookCreate(BaseModel):
+    title: str = Field(min_length=1, max_length=200)
+    content: str = Field(min_length=20, max_length=20000)
+    source: str = Field(default="user-provided", max_length=300)
 
 class IncidentRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -28,7 +38,8 @@ class AnalysisResult(BaseModel):
     root_cause: str
     remediation_steps: list[str]
     closure_note_draft: str
-    similar_incidents: list[dict]
+    evidence: list[dict]
+    analysis_mode: str
     requires_human_review: bool = True
 
 class RetryUpdate(BaseModel):
