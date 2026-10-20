@@ -113,3 +113,4 @@ pytest -q
 ## Current limitations
 
 This is an initial portfolio MVP. It does not yet implement true vector embeddings, multi-tenant authorization, automated retries, or production-grade audit logging. Do not use it to make unsupervised changes to production pipelines.
+# pipelinepulse-ai
